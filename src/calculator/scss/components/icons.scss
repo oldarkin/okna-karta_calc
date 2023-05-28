@@ -1,0 +1,155 @@
+@font-face {
+  font-family: 'calculatoricons';
+  src:  url('../fonts/calculator-icons.eot?7ekfwq');
+  src:  url('../fonts/calculator-icons.eot?7ekfwq#iefix') format('embedded-opentype'),
+    url('../fonts/calculator-icons.ttf?7ekfwq') format('truetype'),
+    url('../fonts/calculator-icons.woff?7ekfwq') format('woff'),
+    url('../fonts/calculator-icons.svg?7ekfwq#calculator-icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="calculator__icon-"], [class*=" calculator__icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'calculatoricons' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.calculator__icon-singleWindowFanlight:before {
+  content: "\e91b";
+}
+.calculator__icon-panoramicSliding:before {
+  content: "\e900";
+}
+.calculator__icon-panoramicAccordeon:before {
+  content: "\e91a";
+}
+.calculator__icon-doubleWindowFanlight:before {
+  content: "\e901";
+}
+.calculator__icon-doubleDoor:before {
+  content: "\e902";
+}
+.calculator__icon-doubleDoorFanlight:before {
+  content: "\e903";
+}
+.calculator__icon-balconyQuadro:before {
+  content: "\e904";
+}
+.calculator__icon-balconyQuadroP:before {
+  content: "\e905";
+}
+.calculator__icon-balkonyDoorDoubleBlindHalf:before {
+  content: "\e906";
+}
+.calculator__icon-balkonyDoorTripleCenter:before {
+  content: "\e907";
+}
+.calculator__icon-balconyQuadroBoat:before {
+  content: "\e908";
+}
+.calculator__icon-balconyEight:before {
+  content: "\e909";
+}
+.calculator__icon-balkonyDoorTriple:before {
+  content: "\e90a";
+}
+.calculator__icon-tripleWindow:before {
+  content: "\e90b";
+}
+.calculator__icon-doubleWindow:before {
+  content: "\e90c";
+}
+.calculator__icon-check:before {
+  content: "\e90d";
+  color: #f6b63a;
+}
+.calculator__icon-singleWindow:before {
+  content: "\e90e";
+}
+.calculator__icon-singleDoor:before {
+  content: "\e90f";
+}
+.calculator__icon-balkonyDoorDouble:before {
+  content: "\e910";
+}
+.calculator__icon-balkonyDoorQuadro:before {
+  content: "\e911";
+}
+.calculator__icon-trash:before {
+  content: "\e912";
+}
+.calculator__icon-doubleDoorBlind:before {
+  content: "\e913";
+}
+.calculator__icon-doubleDoorBlindFanlight:before {
+  content: "\e914";
+}
+.calculator__icon-singleDoorBlind:before {
+  content: "\e915";
+}
+.calculator__icon-balconySix:before {
+  content: "\e916";
+}
+.calculator__icon-balkonyDoorQuadroBlindHalf:before {
+  content: "\e917";
+}
+.calculator__icon-balkonyDoorTripleBlindHalf:before {
+  content: "\e918";
+}
+.calculator__icon-balkonyDoorTripleCenterBlindHalf:before {
+  content: "\e919";
+}
+.calculator__icon-panoramicFrench:before {
+  content: "\e92a";
+}
+.calculator__icon-16:before {
+  content: "\e92b";
+}
+.calculator__icon-15:before {
+  content: "\e92c";
+}
+.calculator__icon-14:before {
+  content: "\e92d";
+}
+.calculator__icon-balconyQuadroHeel:before {
+  content: "\e92e";
+}
+.calculator__icon-balconyQuadroG:before {
+  content: "\e92f";
+}
+.calculator__icon-balconyQuadroFanlight:before {
+  content: "\e930";
+}
+.calculator__icon-doubleDoorBlindHalfFanlight:before {
+  content: "\e931";
+}
+.calculator__icon-doubleDoorBlindHalf:before {
+  content: "\e932";
+}
+.calculator__icon-singleDoorBlindHalf:before {
+  content: "\e933";
+}
+.calculator__icon-tripleWindowFanlight:before {
+  content: "\e934";
+}
+.calculator__icon-sliding-handle:before {
+  content: "\e935";
+  color: #919292;
+}
+.calculator__icon-rotary-handle:before {
+  content: "\e936";
+}
+.calculator__icon-hinge:before {
+  content: "\e937";
+}

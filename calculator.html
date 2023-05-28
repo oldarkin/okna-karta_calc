@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <title>Calculator</title>
+
+  <link rel="stylesheet" href="css/E1.css">
+  <link rel="stylesheet" href="css/PL1.css">    
+  <link rel="stylesheet" href="css/application.min.css">
+
+  <link rel="stylesheet" href="css/calculator.css">
+
+</head>
+<body>
+  <script defer src="https://unpkg.com/alpinejs-component@latest/dist/component.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <div class="container">
+    <div 
+      class="calculator"
+      x-data="{
+      items: [],
+      itemActive: null,
+      itemEmpty: {
+        count: 1,
+        type: '',
+        price: 'middle',
+        sort: '',
+        sortItems: [],
+        layout: ['window'],
+        sortNet: [],
+        isBalconyDoors: false,
+        isFanlight: false,
+        width: 1400,
+        height:  1200,
+        height2: 0,
+        isAdditionalParams: false,
+        sill: false,
+        slope: false,
+        installation: false,
+        supplyValve: false,
+        compound: 'any',
+        furniture: 'any',
+        glass: '2',
+        saveEnergy: false,
+        externalSills: false,
+        ventilation: false,
+        childSafety: false,
+        removalOldWindow: false,
+      },
+      windowTypes: {
+        hingedRight: 'Поворотная правая',
+        static: 'Глухая створка',
+        revolvingRight: 'Поворотно-откидная правая',
+        revolvingLeft: 'Поворотно-откидная левая',
+        hingedLeft: 'Поворотная левая',
+        slidingLeft: 'Раздвижная левая',
+        slidingRight: 'Раздвижная правая',
+        angle: 'Складная система «Гармошка»',
+        paralelSliding: 'Параллельно-сдвижная система открывания',
+      },
+      type: {
+        windows: {
+          title: 'Окна',
+          items: ['singleWindow', 'doubleWindow', 'tripleWindow', 'singleWindowFanlight', 'doubleWindowFanlight', 'tripleWindowFanlight'],
+        },
+        doors: {
+          title: 'Двери',
+          items: ['singleDoorBlindHalf', 'singleDoor', 'singleDoorBlind', 'doubleDoorBlindHalf', 'doubleDoor', 'doubleDoorBlind', 'doubleDoorBlindHalfFanlight', 'doubleDoorFanlight', 'doubleDoorBlindFanlight'],
+        },
+        balconies: {
+          title: 'Балконы и лоджии',
+          items: ['balconyQuadro', 'balconyQuadroP', 'balconyQuadroG', 'balconyQuadroHeel', 'balconyQuadroFanlight', 'balconyQuadroBoat', 'balconySix', 'balconyEight'],
+        },
+        balkonyDoors: {
+          title: 'Балконные блоки',
+          items: ['balkonyDoorDouble', 'balkonyDoorDoubleBlindHalf', 'balkonyDoorTriple', 'balkonyDoorTripleBlindHalf', 'balkonyDoorQuadro', 'balkonyDoorQuadroBlindHalf', 'balkonyDoorTripleCenter', 'balkonyDoorTripleCenterBlindHalf'],
+        },
+        panoramicWindows: {
+          title: 'Панорамные окна',
+          items: ['panoramicFrench', 'panoramicAccordeon', 'panoramicSliding'],
+        },
+      },
+      sort: {
+        singleWindow: {
+          title: 'Одностворчатое окно',
+          icon: 'singleWindow',
+          items: ['revolvingRight'],
+          layout: ['window'],
+          net: [false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        doubleWindow: {
+          title: 'Двухстворчатое окно',
+          icon: 'doubleWindow',
+          items: ['hingedLeft', 'hingedRight'],
+          layout: ['window', 'window'],
+          net: [false,false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingLeft', 'slidingRight'],
+          isFanlight: false,
+        },
+        tripleWindow: {
+          title: 'Трехстворчатое окно',
+          icon: 'tripleWindow',
+          items: ['hingedLeft', 'static', 'hingedRight'],
+          layout: ['window', 'window', 'window'],
+          net: [false,false,false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingLeft', 'slidingRight'],
+          isFanlight: false,
+        },
+        singleWindowFanlight: {
+          title: 'Одностворчатое окно с фрамугой',
+          icon: 'singleWindowFanlight',
+          items: ['revolvingRight'],
+          layout: ['window'],
+          net: [false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: true,
+        },
+        doubleWindowFanlight: {
+          title: 'Двухстворчатое окно с фрамугой',
+          icon: 'doubleWindowFanlight',
+          items: ['hingedLeft', 'hingedRight'],
+          layout: ['window', 'window'],
+          net: [false,false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingLeft', 'slidingRight'],
+          isFanlight: true,
+        },
+        tripleWindowFanlight: {
+          title: 'Трехстворчатое окно с фрамугой',
+          icon: 'tripleWindowFanlight',
+          items: ['hingedLeft', 'static', 'hingedRight'],
+          layout: ['window', 'window', 'window'],
+          net: [false,false,false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingLeft', 'slidingRight'],
+          isFanlight: true,
+        },
+        singleDoorBlindHalf: {
+          title: 'Балконная дверь с горизонтальным импостом и сэндвич-панелью внизу',
+          icon: 'singleDoorBlindHalf',
+          items: ['revolvingRight'],
+          layout: ['doorBlindHalf'],
+          net: [false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        singleDoor: {
+          title: 'Балконная дверь с горизонтальным импостом и прозрачным заполнением',
+          icon: 'singleDoor',
+          items: ['revolvingRight'],
+          layout: ['door'],
+          net: [false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        singleDoorBlind: {
+          title: 'Входная дверь с горизонтальным импостом и непрозрачным заполнением',
+          icon: 'singleDoorBlind',
+          items: ['revolvingRight'],
+          layout: ['doorBlind'],
+          net: [false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        doubleDoorBlindHalf: {
+          title: 'Двухстворчатая балконная дверь с горизонтальным импостом и сэндвич-панелью внизу',
+          icon: 'doubleDoorBlindHalf',
+          items: ['static', 'revolvingRight'],
+          layout: ['doorBlindHalf', 'doorBlindHalf'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        doubleDoor: {
+          title: 'Двухстворчатая входная дверь с горизонтальным импостом и непрозрачным заполнением',
+          icon: 'doubleDoor',
+          items: ['static', 'revolvingRight'],
+          layout: ['door', 'door'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        doubleDoorBlind: {
+          title: 'Двухстворчатая входная дверь с горизонтальным импостом и непрозрачным заполнением',
+          icon: 'doubleDoorBlind',
+          items: ['static', 'revolvingRight'],
+          layout: ['doorBlind', 'doorBlind'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        doubleDoorBlindHalfFanlight: {
+          title: 'Двухстворчатая балконная дверь с фрамугой, горизонтальным импостом и сэндвич-панелью внизу',
+          icon: 'doubleDoorBlindHalfFanlight',
+          items: ['static', 'revolvingRight'],
+          layout: ['doorBlindHalf', 'doorBlindHalf'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: true,
+        },
+        doubleDoorFanlight: {
+          title: 'Двухстворчатая балконная дверь с фрамугой, горизонтальным импостом и прозрачным заполнением',
+          icon: 'doubleDoorFanlight',
+          items: ['static', 'revolvingRight'],
+          layout: ['door', 'door'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: true,
+        },
+        doubleDoorBlindFanlight: {
+          title: 'Двухстворчатая входная дверь с фрамугой, горизонтальным импостом и непрозрачным заполнением',
+          icon: 'doubleDoorBlindFanlight',
+          items: ['static', 'revolvingRight'],
+          layout: ['doorBlind', 'doorBlind'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: true,
+        },
+        balconyQuadro: {
+          title: 'Остекление лоджии прямое',
+          icon: 'balconyQuadro',
+          items: ['static', 'revolvingLeft', 'revolvingRight', 'static'],
+          layout: ['window', 'window', 'window', 'window'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: false,
+        },
+        balconyQuadroP: {
+          title: 'Остекление П-образного балкона',
+          icon: 'balconyQuadroP',
+          items: ['static', 'revolvingLeft', 'revolvingRight', 'static'],
+          layout: ['windowSqewTop', 'window', 'window', 'windowSqewBottom'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: false,
+          sqew: ['top', false, false, 'bottom'],
+        },
+        balconyQuadroG: {
+          title: 'Остекление Г-образного балкона',
+          icon: 'balconyQuadroG',
+          items: ['revolvingLeft', 'revolvingRight', 'static', 'static'],
+          layout: ['window', 'window', 'windowSqewBottom', 'windowSqewBottom'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: false,
+          sqew: [false, false, 'bottom', 'bottom'],
+        },
+        balconyQuadroHeel: {
+          title: 'Остекление балкона каблук',
+          icon: 'balconyQuadroHeel',
+          items: ['revolvingLeft', 'revolvingRight', 'static', 'static'],
+          layout: ['window', 'window', 'windowSqewBottom', 'window'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: false,
+          sqew: [false, false, 'bottom', false],
+        },
+        balconyQuadroFanlight: {
+          title: 'Остекление лоджии прямое с фрамугой',
+          icon: 'balconyQuadroFanlight',
+          items: ['static', 'revolvingLeft', 'revolvingRight', 'static'],
+          layout: ['window', 'window', 'window', 'window'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: true,
+        },
+        balconyQuadroBoat: {
+          title: 'Остекление балкона лодочка',
+          icon: 'balconyQuadroBoat',
+          items: ['static', 'revolvingLeft', 'revolvingRight', 'static'],
+          layout: ['windowSqewTop', 'window', 'window', 'window'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: false,
+          sqew: ['top', false, false, false],
+        },
+        balconySix: {
+          title: 'Остекление лоджии 6 створок',
+          icon: 'balconySix',
+          items: ['static', 'revolvingLeft', 'static', 'static', 'revolvingRight', 'static'],
+          layout: ['window', 'window', 'window', 'window', 'window', 'window'],
+          net: [false, false, false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: false,
+        },
+        balconyEight: {
+          title: 'Остекление лоджии 8 створок',
+          icon: 'balconyEight',
+          items: ['static', 'revolvingLeft', 'static', 'revolvingLeft', 'revolvingRight', 'static', 'revolvingRight', 'static'],
+          layout: ['window', 'window', 'window', 'window', 'window', 'window', 'window', 'window'],
+          net: [false, false, false, false, false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft', 'slidingRight', 'slidingLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorDouble: {
+          title: 'Одностворчатое окно с балконной дверью',
+          icon: 'balkonyDoorDouble',
+          items: ['revolvingLeft', 'revolvingRight'],
+          layout: ['window', 'door'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorDoubleBlindHalf: {
+          title: 'Одностворчатое окно с балконной дверью (сэндвич-панель)',
+          icon: 'balkonyDoorDoubleBlindHalf',
+          items: ['revolvingLeft', 'revolvingRight'],
+          layout: ['window', 'doorBlindHalf'],
+          net: [false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorTriple: {
+          title: 'Двухстворчатое окно с балконной дверью',
+          icon: 'balkonyDoorTriple',
+          items: ['revolvingLeft', 'static', 'revolvingRight'],
+          layout: ['window', 'window', 'door'],
+          net: [false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorTripleBlindHalf: {
+          title: 'Двухстворчатое окно с балконной дверью (сэндвич-панель)',
+          icon: 'balkonyDoorTripleBlindHalf',
+          items: ['revolvingLeft', 'static', 'revolvingRight'],
+          layout: ['window', 'window', 'doorBlindHalf'],
+          net: [false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorQuadro: {
+          title: 'Трехстворчатое окно с балконной дверью',
+          icon: 'balkonyDoorQuadro',
+          items: ['revolvingLeft', 'static', 'revolvingLeft', 'revolvingRight'],
+          layout: ['window', 'window', 'window', 'door'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorQuadroBlindHalf: {
+          title: 'Трехстворчатое окно с балконной дверью (сэндвич-панель)',
+          icon: 'balkonyDoorQuadroBlindHalf',
+          items: ['revolvingLeft', 'static', 'revolvingLeft', 'revolvingRight'],
+          layout: ['window', 'window', 'window', 'doorBlindHalf'],
+          net: [false, false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorTripleCenter: {
+          title: 'Окна с балконной дверью по центру',
+          icon: 'balkonyDoorTripleCenter',
+          items: ['revolvingLeft', 'revolvingLeft', 'revolvingRight'],
+          layout: ['window', 'door', 'window'],
+          net: [false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        balkonyDoorTripleCenterBlindHalf: {
+          title: 'Окна с балконной дверью по центру (сэндвич-панель)',
+          icon: 'balkonyDoorTripleCenterBlindHalf',
+          items: ['revolvingLeft', 'revolvingLeft', 'revolvingRight'],
+          layout: ['window', 'doorBlindHalf', 'window'],
+          net: [false, false, false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        panoramicFrench: {
+          title: 'Французское панорамное окно',
+          icon: 'panoramicFrench',
+          items: ['hingedLeft', 'hingedRight'],
+          layout: ['panoramicFrench', 'panoramicFrench'],
+          net: [false,false],
+          available: ['hingedRight', 'static', 'revolvingRight', 'revolvingLeft', 'hingedLeft'],
+          isFanlight: false,
+        },
+        panoramicAccordeon: {
+          title: 'Складная система «Гармошка»',
+          icon: 'panoramicAccordeon',
+          items: ['angle'],
+          layout: ['panoramicAccordeon'],
+          net: [false],
+          available: ['angle'],
+          isFanlight: false,
+        },
+        panoramicSliding: {
+          title: 'Параллельно-сдвижная портальная система',
+          icon: 'panoramicSliding',
+          items: ['paralelSliding'],
+          layout: ['panoramicSliding'],
+          net: [false],
+          available: ['paralelSliding'],
+          isFanlight: false,
+        },
+      },
+      price: {
+        low: {
+          title: 'Эконом',
+          price: .0025,
+        },
+        middle: {
+          title: 'Средний',
+          price: .0032,
+        },
+        high: {
+          title: 'Премиум',
+          price: .004,
+        },
+      },
+      glazing: {
+        cold: 'Холодное остекление',
+        warm: 'Теплое остекление',
+      },
+      compound: {
+        artec: 'Artec',
+        bauline: 'BAULINE',
+        brusbox: 'Brusbox',
+        deceuninck: 'Deceuninck',
+        ecpplastics: 'ECP PLASTICS',
+        exprof: 'Exprof',
+        gealan: 'Gealan',
+        goodwin: 'Goodwin',
+        ivaper: 'IVAPER',
+        kbe: 'KBE',
+        novotex: 'Novotex',
+        proplex: 'Proplex',
+        rehau: 'Rehau',
+        schuco: 'Schuco',
+        veka: 'VEKA',
+        whs: 'WHS',
+      },
+      furniture: {
+        accado: 'ACCADO',
+        alutech: 'Alutech',
+        axor: 'AXOR',
+        elementis: 'Elementis',
+        fapim: 'Fapim',
+        geviss: 'GEVISS',
+        gu: 'GU',
+        internika: 'Internika',
+        maco: 'MACO',
+        provedal: 'Provedal',
+        roto: 'ROTO',
+        saturn: 'Saturn',
+        schuco: 'Schuco',
+        siegenia: 'Siegenia',
+        vorne: 'Vorne',
+        winkhaus: 'Winkhaus',
+      },
+      glass: {
+        0: '1 стекло',
+        1: 'Однокамерный',
+        2: 'Двухкамерный',
+        3: 'Трехкамерный',
+      },
+      isShowResult: false,
+      result: 0,
+
+      setWindowType(activeType) {
+        const currentSort = this.itemActive.sort;
+        this.itemActive.type = activeType;
+        this.itemActive.isBalconyDoors = (activeType === 'balkonyDoors');
+        this.itemActive.height2 = 0;
+
+        if( !this.type[activeType].items[currentSort] ) {
+          const activeSort = this.type[activeType].items[0];
+          this.setWindowSort(activeSort);
+        }
+      },
+
+      setWindowSort(activeSort) {
+        const sortItems = this.sort[activeSort].items;
+        const sortNet = this.sort[activeSort].net;
+        const layout = this.sort[activeSort].layout;
+        this.itemActive.sort = activeSort;
+        this.itemActive.sortItems = JSON.parse(JSON.stringify(sortItems));
+        this.itemActive.sortNet = JSON.parse(JSON.stringify(sortNet));
+        this.itemActive.layout = JSON.parse(JSON.stringify(layout));
+        this.itemActive.isFanlight = this.sort[activeSort].isFanlight;
+      },
+
+      editItem(id) {
+        // save active item
+        const items = JSON.parse(JSON.stringify(this.items));
+        items.forEach(item => {
+          if(item.id === this.itemActive.id) {
+            item = JSON.parse(JSON.stringify(item));
+          }
+        });
+        this.items = JSON.parse(JSON.stringify(items));
+        // set active item
+        this.itemActive = this.items.find(item => item.id === id);
+      },
+
+      deleteItem(id) {
+        if(this.itemActive.id === id) {
+          id > 0 ? this.itemActive = this.items[0] : this.items[1];
+        }
+        this.items = this.items.filter(item => item.id !== id);
+      },
+
+      addItem() {
+        const items = JSON.parse(JSON.stringify(this.items));
+
+        this.itemActive = JSON.parse(JSON.stringify(this.itemEmpty));
+        this.itemActive.id = Date.now();
+        this.setWindowType('windows');
+
+        items.push(this.itemActive);
+        this.items = items;
+      },
+
+      getSum() {
+        this.result = this.items.reduce( (sum, item) => {
+          let area;
+          if(item.height2) {
+            area = (item.height2 * item.width) - (( item.height2 - item.height ) * ( item.width *  (item.sortItems.length - 1) ) / item.sortItems.length );
+          } else {
+            area = item.height * item.width;
+          }
+          return sum += area * this.price[item.price].price * item.count;
+        }, 0);
+        this.isShowResult = true;
+      },
+
+      get getResult() {
+        return this.items.reduce( (sum, item) => {
+          let area;
+          if(item.height2) {
+            area = (item.height2 * item.width) - (( item.height2 - item.height ) * ( item.width *  (item.sortItems.length - 1) ) / item.sortItems.length );
+          } else {
+            area = item.height * item.width;
+          }
+          return sum += area * this.price[item.price].price * item.count;
+        }, 0);
+      },
+
+    }"
+    x-init="itemActive = JSON.parse(JSON.stringify(itemEmpty)); itemActive.id = Date.now(); items.push(itemActive); setWindowType('doors');">
+      <ol class="calculator__cart-list" x-show="items.length > 1">
+        <template x-for="(item, index) in items">
+          <li class="calculator__cart-item">
+            <div class="calculator__cart-item-number" x-text="`${index + 1}.`"></div>
+            <div class="calculator__cart-title" x-text="sort[item.sort].title"></div>
+            <div class="calculator__cart-action">
+              <span x-show="item.id === itemActive.id">
+                сейчас редактируется
+              </span>
+              <button type="button" class="calculator__cart-edit" x-show="item.id !== itemActive.id" @click="editItem(item.id)">редактировать</button>
+            </div>
+            <div class="calculator__cart-counter">
+              <div class="calculator__counter">
+                <button type="button" class="calculator__counter-button" @click="item.count > 1 ? item.count-- : deleteItem(item.id)">-</button>
+                <input type="text" class="calculator__counter-input" x-model=" item.count" />
+                <button type="button" class="calculator__counter-button" @click="item.count++">+</button>
+              </div>
+            </div>
+            <div class="calculator__cart-delete">
+              <button type="button" class="calculator__counter-button" @click="deleteItem(item.id)">
+                <img src="img/calculator/trash.svg" style="width: 13px; height: 16px" alt="Удалить" />
+              </button>
+            </div>
+          </li>
+        </template>
+      </ol>
+
+      <!--Params#1-->
+      <div class="calculator__params">
+        <h3>Что рассчитать?</h3>
+        <div class="calculator__row">
+          <div class="calculator__column">
+            <div class="calculator__select-block">
+              <select class="calculator__select" name="type" @change="setWindowType($event.target.value)">
+                <template x-for="[key, description] in Object.entries(type)" :key="key">
+                  <option :value="key" :selected="key === itemActive.type" x-text="description.title"></option>
+                </template>
+              </select>
+            </div>
+          </div>
+          <div class="calculator__column">
+            <div class="calculator__select-block">
+              <select class="calculator__select" name="type" x-model="itemActive.price">
+                <template x-for="[key, description] in Object.entries(price)" :key="key">
+                  <option :value="key" :selected="key === itemActive.price" x-text="description.title"></option>
+                </template>
+              </select>
+            </div>
+            <div x-show="itemActive.price == 'low'" class="calculator__note">Низкий ценовой сегмент</div>
+            <div x-show="itemActive.price == 'middle'" class="calculator__note">Средний ценовой сегмент</div>
+            <div x-show="itemActive.price == 'high'" class="calculator__note">Высокий ценовой сегмент</div>
+          </div>
+        </div>
+
+        <div class="calculator__type-list">
+          <template x-for="typeSort in type[itemActive.type].items">
+            <div class="calculator__sort">
+              <label class="calculator__sort-view" @click="setWindowSort(typeSort)" :title="sort[typeSort].title">
+                <input type="radio" name="sort" class="calculator__sort-input" :value="typeSort" :checked="typeSort === itemActive.sort">
+                <div :class="sort[typeSort].reflect ? 'calculator__sort-image--reverted' : ''" class="calculator__sort-image">
+                  <i :class="'calculator__icon-' + sort[typeSort].icon"></i>
+                </div>
+              </label>
+              <label x-show="sort[typeSort].isReflect" class="calculator__sort-reflect">
+                <input type="checkbox" name="reflect" x-model="sort[typeSort].reflect" class="calculator__sort-reflect-input">
+                <svg class="calculator__sort-reflect-image" xmlns="http://www.w3.org/2000/svg" width="18" height="10" viewBox="0 0 71 39">
+                    <g fill="none" fill-rule="evenodd">
+                        <polygon fill="currentColor" fill-rule="nonzero" points="27.621 38.496 27.621 19.707 46.291 29.101" transform="matrix(1 0 0 -1 0 58.204)"></polygon>
+                        <path stroke="currentColor" stroke-width="3.75" d="M35.408,1.9995 C17.138,1.9995 2.328,8.067 2.328,15.55075 C2.328,23.0345 17.138,29.102 35.408,29.102 C53.67675,29.102 68.48675,23.0345 68.48675,15.55075 C68.48675,11.32075 63.758,7.5445 56.34675,5.0595" transform="matrix(1 0 0 -1 0 31.102)"></path>
+                    </g>
+                </svg>
+              </label>
+            </div>
+          </template>
+        </div>
+
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.sill" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Подоконник
+              <span class="calculator__explanation" data-toggle="tooltip" title="Подоконник – неотъемлемый элемент оконной конструкции.">?</span>
+          </label>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.slope" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Отделка откосов
+              <span class="calculator__explanation" data-toggle="tooltip" title="Откосы формируют внешний вид окон, создают гидроизоляционный барьер по периметру рамы, защищают монтажную пену и препятствуют воздухообмену между улицей и помещениями.">?</span>
+          </label>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.installation" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Нужен монтаж
+              <span class="calculator__explanation" data-toggle="tooltip" title="Качество монтажа напрямую влияет на характеристики установленного окна, поэтому важно соблюдать требования ГОСТ.">?</span>
+          </label>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" name="supplyValve" x-model="itemActive.supplyValve" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Приточный клапан
+              <span class="calculator__explanation" data-toggle="tooltip" title="Эффективный способ улучшить микроклимат в помещении">?</span>
+          </label>
+        </div>
+      </div>
+      <!--View-->
+      <div class="calculator__view">
+        <div class="calculator__view-layout">
+          <div class="calculator__view-types">
+            <template x-for="(item, index) in itemActive.sortItems">
+              <div class="calculator__view-column calculator__view-column--select">
+                <div class="calculator__select-block">
+                  <select class="calculator__select" x-model="itemActive.sortItems[index]">
+                    <template x-for="availableItem in sort[itemActive.sort].available">
+                      <option :value="availableItem" :selected="availableItem === itemActive.sortItems[index]" x-text="windowTypes[availableItem]"></option>
+                    </template>
+                  </select>
+                </div>
+              </div>
+            </template>
+          </div>
+          <div class="calculator__view-images">
+            <template x-for="(item, index) in itemActive.sortItems">
+              <div :class="{
+                'calculator__window-block--with-fanlight': itemActive.isFanlight,
+                'calculator__window-block--sqew-top': itemActive.layout[index] === 'windowSqewTop',
+                'calculator__window-block--sqew-bottom': itemActive.layout[index] === 'windowSqewBottom',
+                'calculator__window-block--panoramic-french': itemActive.layout[index] === 'panoramicFrench',
+                }" class="calculator__window-block calculator__view-column">
+                <div :class="'calculator__window--'+item"  class="calculator__window">
+                  <img :src="'img/calculator/' + itemActive.layout[index] + '.svg'" alt="Окно" class="calculator__window-window" />
+                  <img src="img/calculator/sill.svg" alt="Подоконник" x-show="itemActive.sill" class="calculator__window-sill" :class="itemActive.sill ? 'calculator__window-sill--shown' : '' " />
+                  <div :class="itemActive.slope ? 'calculator__window-slope--show' : ''" class="calculator__window-slope"></div>
+                  <div class="calculator__handle"></div>
+                  <div class="calculator__hinge"></div>
+                
+                  <label class="calculator__net calculator__checkbox" x-show="item !== 'static' ">
+                    <input type="checkbox" x-model="itemActive.sortNet[index]" class="calculator__checkbox-input" />
+                    <i class="calculator__checkbox-icon"></i>
+                    <span class="calculator__net-text">Москитная сетка</span>
+                  </label>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <div class="calculator__sizes">
+          <label for="#calculator_height" class="calculator__sizes-height" ^class="( itemActive.isBalconyDoors && ~itemActive.sortItems[0].toLowerCase.indexOf('window') ) ? 'calculator__sizes-height--small' : ''">
+            <input id="calculator_height" type="text" class="calculator__size-input" x-model="itemActive.height" @input="" />
+            <span class="calculator__size-arrow calculator__size-arrow--h"></span>
+            <span class="calculator__sizes-text">мм</span>
+          </label>
+          <label for="#calculator_width" class="calculator__sizes-width">
+            <input id="calculator_width" type="text" class="calculator__size-input" x-model="itemActive.width"/>
+            <span class="calculator__size-arrow calculator__size-arrow--w"></span>
+            <span class="calculator__sizes-text calculator__sizes-text--w">мм</span>
+          </label>
+          <template x-if="itemActive.isBalconyDoors">
+            <label for="#calculator_height2" class="calculator__sizes-height2" ^class="~itemActive.sortItems[itemActive.sortItems.length - 1].toLowerCase.indexOf('window') ? 'calculator__sizes-height--small' : ''">
+              <input id="calculator_height2" type="text" class="calculator__size-input" x-model="itemActive.height2"/>
+              <span class="calculator__size-arrow calculator__size-arrow--h"></span>
+              <span class="calculator__sizes-text">мм</span>
+            </label>
+          </template>
+        </div>
+        <div class="calculator__view-counter">
+          <h4>Укажите количество окон</h4>
+          <div class="calculator__counter">
+            <button type="button" class="calculator__counter-button" @click="itemActive.count > 1 ? itemActive.count-- : deleteItem(itemActive.id)">-</button>
+            <input type="text" class="calculator__counter-input" x-model=" itemActive.count" />
+            <button type="button" class="calculator__counter-button" @click="itemActive.count++">+</button>
+          </div>
+        </div>
+      </div>
+      <!--Params#2-->
+      <div class="calculator__additional-params" x-show="itemActive.isAdditionalParams">
+        <h3>
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.isAdditionalParams" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Дополнительные параметры
+          </label>
+          <div class="calculator__note">не обязательно для заполнения</div>
+        </h3>
+        <div class="calculator__row">
+          <label class="calculator__label" for="compound">
+            Профиль
+            <span class="calculator__explanation" data-toggle="tooltip" title="Элемент, из которого собирается рама окна и створки, и который является основной опорной частью будущего окна.">?</span>
+          </label>
+          <div class="calculator__select-block">
+            <select class="calculator__select" name="compound" x-model="itemActive.compound">
+              <template x-for="[key, description] in Object.entries(compound)" :key="key">
+                <option :value="key" :selected="key === itemActive.compound" x-text="description.title"></option>
+              </template>
+            </select>
+          </div>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__label" for="furniture">
+            Фурнитура
+            <span class="calculator__explanation" data-toggle="tooltip" title="Система элементов, отвечающих за крепление окна к раме,  способы открывания и фиксацию створок, запирание окна и плотность прилегания створки к раме.">?</span>
+          </label>
+          <div class="calculator__select-block">
+            <select class="calculator__select" name="furniture" x-model="itemActive.furniture">
+              <template x-for="[key, description] in Object.entries(furniture)" :key="key">
+                <option :value="key" :selected="key === itemActive.furniture" x-text="description.title"></option>
+              </template>
+            </select>
+          </div>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__label" for="glass">
+            Стеклопакет
+            <span class="calculator__explanation" data-toggle="tooltip" title="Светопрозрачное заполнение окна, состоящее из двух или трех стекол, соответственно, однокамерные и двухкамерные стеклопакеты.">?</span>
+          </label>
+          <div class="calculator__select-block">
+            <select class="calculator__select" name="glass" x-model="itemActive.glass">
+              <template x-for="[key, description] in Object.entries(glass)" :key="key">
+                <option :value="key" :selected="key === itemActive.glass" x-text="description.title"></option>
+              </template>
+            </select>
+          </div>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.saveEnergy" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Энергосберегающий
+          </label>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.externalSills" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Наружные отливы
+              <span class="calculator__explanation" data-toggle="tooltip" title="Наружные отливы – функциональные элементы, основное предназначение которых – защита соединения оконной рамы и проема.">?</span>
+          </label>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.ventilation" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Проветривание
+              <span class="calculator__explanation" data-toggle="tooltip" title="Обеспечить приток свежего воздуха помогут вентиляционные устройства.">?</span>
+          </label>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.childSafety" class="calculator__checkbox-input" />
+            <i class="calculator__checkbox-icon"></i>
+            Детская безопасность
+            <span class="calculator__explanation" data-toggle="tooltip" title="Не волноваться, когда дети находятся рядом с окном, позволят устройства для детской безопасности.">?</span>
+          </label>
+        </div>
+        <div class="calculator__row">
+          <label class="calculator__checkbox">
+            <input type="checkbox" x-model="itemActive.removalOldWindow" class="calculator__checkbox-input" />
+              <i class="calculator__checkbox-icon"></i>
+              Демонтаж и вывоз старого окна
+              <span class="calculator__explanation" data-toggle="tooltip" title="Демонтаж окон – процедура извлечения старой конструкции из оконного проема, которую рекомендуется поручить профессионалам.">?</span>
+          </label>
+        </div>
+      </div>
+      <div class="calculator__submit text-center">
+        <button type="button" class="btn btn-success btn-pill btn-lg" @click="getSum">Получить расчет</button>
+        <button type="button" class="btn btn-default btn-pill btn-lg" @click="addItem">Добавить еще окно</button>
+      </div>
+
+      <div class="calculator__result"><!--x-show="isShowResult" @click.outside="isShowResult = false"-->
+        <h3>Стоимость составляет:</h3>
+        <p><span x-text="getResult" class="calculator__result-text"></span> рублей</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="java/V1.js" defer></script>
+  <script src="java/E1.js" defer></script>
+  <script src="java/PL1.js" defer></script>
+  <script src="java/application.min.js"></script>
+</body>
+</html>

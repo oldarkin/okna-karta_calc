@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="57.181004mm"
+   height="3.890204mm"
+   viewBox="0 0 57.181004 3.890204"
+   version="1.1"
+   id="svg79"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="sill.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview81"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.4187009"
+     inkscape:cx="982.80181"
+     inkscape:cy="368.99849"
+     inkscape:window-width="1304"
+     inkscape:window-height="704"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs76">
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1237"
+       id="linearGradient1709"
+       gradientUnits="userSpaceOnUse"
+       x1="-51.715271"
+       y1="-219.15788"
+       x2="7.0966225"
+       y2="-219.15788"
+       gradientTransform="matrix(-1.1124845,0,0,-0.0338636,-155.32493,44.311128)" />
+    <linearGradient
+       id="linearGradient1237"
+       inkscape:swatch="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1235" />
+    </linearGradient>
+  </defs>
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(154.97348,-50.503835)">
+    <path
+       id="rect43-7"
+       style="fill:#ececec;stroke:url(#linearGradient1709);stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0"
+       d="m -148.00078,50.503835 -6.9727,2.849439 h 0.71055 v 1.040764 h 55.776956 v -1.040764 h 0.693497 L -105.777,50.522956 Z" />
+  </g>
+</svg>

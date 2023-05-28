@@ -1,0 +1,810 @@
+.calculator {
+  display: grid;
+  grid-template-areas: 
+            "result result"
+            "cart cart"
+            "params view"
+            "additional-params view"
+            "submit submit";
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto auto auto auto 50px;
+  gap: 0 50px;
+  padding: 0 15px;
+  margin-bottom: 3em;
+
+  @media (max-width: $xs) {
+    grid-template-areas: 
+            "result"
+            "cart"
+            "params"
+            "view"
+            "additional-params"
+            "submit";
+    grid-template-columns: 100%;
+    grid-template-rows: auto auto auto auto auto auto;
+  }
+
+  &__params {
+    grid-area: params;
+  }
+
+  &__view {
+    grid-area: view;
+    margin-bottom: 2em;
+    padding: 60px 70px 0;
+    position: relative;
+  }
+
+  &__additional-params {
+    grid-area: additional-params;
+  }
+
+  &__submit {
+    grid-area: submit;
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 1em;
+    column-gap: 1em;
+    justify-content: center;
+  }
+
+  &__result {
+    grid-area: result;
+    border-bottom: 2px solid $active-color;
+    padding-bottom: 2em;
+    margin-bottom: 2em;
+  }
+  
+  &__cart-list {
+    list-style: none;
+    margin: 0 0 2em;
+    padding: 0;
+    grid-area: cart;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+    margin-bottom: 2em;
+    column-gap: 2em;
+
+    @media (max-width: $xs) {
+      flex-wrap: wrap;
+      margin-bottom: 0;
+    }
+  }
+
+  &__column {
+    width: 50%;
+
+    @media (max-width: $xs) {
+      width: 100%;
+      margin-bottom: 2em;
+    }
+  }
+
+  &__cart-item {
+    display: flex;
+    margin: 3px 0;
+    background-color: $bg-color;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 46px;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 120%;
+
+    @media (max-width: $xs) {
+      flex-wrap: wrap;
+      padding-bottom: 25px;
+      padding-top: 25px;
+      padding-left: 20px;
+      padding-right: 20px;
+      font-size: 15px;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+  }
+
+  &__cart-item-number {
+    margin-right: 27px;
+    color: $active-color;
+  }
+
+  &__cart-title {
+    max-width: 50%;
+    margin: 0;
+
+    @media (max-width: $xs) {
+      max-width: 100%;
+      width: 100%;
+    }
+  }
+
+  &__cart-action {
+    font-family: "PT Serif", serif;
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+    letter-spacing: 0.2px;
+    text-align: left;
+    color: $gray-color;
+    transition: color .4s;
+    margin-left: 25px;
+    margin-right: auto;
+    cursor: pointer;
+
+    @media (max-width: $xs) {
+      width: 100%;
+      margin-left: 26px;
+      margin-top: 15px;
+    }
+  }
+
+  &__cart-edit {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  &__cart-counter {
+    margin-right: 0;
+    margin-left: auto;
+    padding-right: 50px;
+  }
+
+  &__cart-delete {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  &__counter {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    position: relative;
+  }
+
+  &__counter-button {
+    display: block;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    color: $gray-color;
+    text-align: center;
+    font-size: 2em;
+    line-height: 35px;
+
+    &:hover {
+      color: $active-color;
+      background-color: $bg-fon;
+    }
+  }
+
+  &__counter-input {
+    font-size: 15px;
+    text-align: center;
+    color: $text-color;
+    margin: 0;
+    width: 60px;
+    height: 40px;
+    border-radius: 2px;
+    background-color: $bg-fon;
+    border: none;
+    line-height: 40px;
+  }
+
+  &__size-input {
+    @extend .calculator__counter-input;
+
+    position: relative;
+    z-index: 10;
+    border: 1px solid $gray-color;
+
+    &:focus {
+      border-color: $active-color;
+      outline-color: $active-color;
+    }
+  }
+
+  &__size-arrow {
+    display: block;
+    position: absolute;
+    z-index: 1;
+
+    &--h {
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: $gray-color;
+      left: calc(50% - 1px);
+
+      &:before, &:after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        left: -4px;
+        border-top: 2px solid $gray-color;
+        border-right: 2px solid $gray-color;
+      }
+
+      &:before {
+        top: 0;
+        transform: rotate(-45deg);
+      }
+
+      &:after {
+        bottom: 0;
+        transform: rotate(135deg);
+      }
+
+      .calculator__size-input:focus + & {
+        background: $active-color;
+
+        &:before, &:after {
+          border-color: $active-color;
+        }
+      }
+    }
+
+    &--w {
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: $gray-color;
+      bottom: calc(50% - 1px);
+
+      &:before, &:after {
+        content: '';
+        display: block;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        bottom: -4px;
+        border-top: 2px solid $gray-color;
+        border-right: 2px solid $gray-color;
+      }
+
+      &:before {
+        left: 0;
+        transform: rotate(-135deg);
+      }
+
+      &:after {
+        right: 0;
+        transform: rotate(45deg);
+      }
+
+      .calculator__size-input:focus + & {
+        background: $active-color;
+
+        &:before, &:after {
+          border-color: $active-color;
+        }
+      }
+    }
+  }
+
+  &__select-block {
+    position: relative;
+    
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      border-color: $gray-color transparent transparent transparent;
+      border-style: solid;
+      border-width: 6px 4px 0 4px;
+      height: 0;
+      right: 1em;
+      margin-top: -2px;
+      top: 50%;
+      width: 0;
+    }
+  }
+
+  &__select {
+    display: block;
+    font-size: 15px;
+    color: $text-color;
+    line-height: 1.3;
+    padding: .6em 1.4em .5em .8em;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    border: 1px solid  $gray-color;
+    box-shadow: 0 1px 0 1px rgba(0,0,0,.04);
+    border-radius: .5em;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+
+    &::-ms-expand {
+      display: none;
+    }
+    /* Hover style */
+    &:hover {
+      border-color: $active-color;
+    }
+    /* Focus style */
+    &:focus {
+      border-color: $active-color;
+      /* It'd be nice to use -webkit-focus-ring-color here but it doesn't work on box-shadow */
+      //box-shadow: 0 0 1px 3px $active-color;
+      //box-shadow: 0 0 0 3px -moz-mac-focusring;
+      color: $text-color; 
+      outline: none;
+    }
+
+    option {
+      font-weight:normal;
+      font-size: 15px;
+      padding: .2em .5em;
+    }
+  }
+
+  &__checkbox {
+    font-size: 15px;
+    line-height: 1.2em;
+    font-weight: normal;
+    cursor: pointer;
+    
+    &:hover {
+      //color: $active-color;
+
+      & .calculator__checkbox-icon {
+        border-color: $active-color;
+      }
+    }
+  }
+
+  &__checkbox-input {
+    display: none;
+  }
+
+  &__checkbox-icon {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    border: 1px solid $gray-color;
+    border-radius: 2px;
+    background: $bg-color;
+    height: 1em;
+    width: 1em;
+    transition: border-color 0.4s;
+    margin-right: 1.5em;
+
+    &::after {
+      content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMC4zMTMgOS4wMzEiPjxwYXRoIGZpbGw9IiNmNmI2M2EiIGQ9Ik0xMC4xNDcgMy4wNDRMNC4zMjMgOC44NjlhLjUuNSAwIDAxLS43MTIgMGwtLjE1OC0uMTU4LS4xNzEtLjE3Mi0uNzM4LS43MzhhLjA5MS4wOTEgMCAwMC0uMDExLS4wMTZMLjE0OSA1LjM3NmEuNS41IDAgMDEwLS43MTJsMS4wNjctMS4wNjdhLjUuNSAwIDAxLjcxMiAwbDIuMDQzIDIuMDY2IDQuNC00LjRhLjUuNSAwIDAxLjcxMSAwbDEuMDY3IDEuMDY3YS41LjUgMCAwMS0uMDAyLjcxNHoiLz48L3N2Zz4=');
+      display: block;
+      position: absolute;
+      width: .7em;
+      height: .7em;
+      bottom: 0;
+      left: 0;
+      margin-bottom: .4em;
+      margin-left: .1em;
+      text-align: center;
+      opacity: 0;
+
+      .calculator__checkbox-input:checked + & {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__explanation {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    font-size: .7em;
+    cursor: pointer;
+    background-color: $gray-color;
+    color: $bg-fon;
+  }
+
+  &__note {
+    padding: 0.5em 0;
+    font-size: 12px;
+    line-height: 1.2;
+    color: $gray-color;
+  }
+
+  &__type-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    row-gap: 2em;
+    column-gap: 2em;
+    margin-bottom: 2em;
+  }
+
+  &__sort-image {
+    font-size: 30px;
+    color: $gray-color;
+    cursor: pointer;
+
+    &:hover {
+      color: $active-color;
+    }
+
+    .calculator__sort-input:checked + & {
+      color: $active-color;
+    }
+  }
+
+  &__sort-input {
+    display: none;
+  }
+
+  &__result-text {
+    font-size: 3em;
+    font-weight: bold;
+  }
+
+  &__view-layout {
+    max-width: 100%;
+    margin: 0 auto 2em;
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+    scrollbar-color: $gray-color $active-color;
+    scrollbar-gutter: stable;
+
+    &::-webkit-scrollbar {
+      height: 5px;
+    }
+    
+    &::-webkit-scrollbar-track {
+      background-color: $gray-color;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: $active-color;
+    }
+
+    @media (max-width: $xs) {
+      padding: 0 30px;
+    }
+  }
+
+  &__view-types {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto 2em;
+  }
+
+  &__view-column {
+    margin: 0;
+    max-width: 180px;
+    min-width: 100px;
+    flex-shrink: 1;
+    height: auto;
+
+    &--select {
+      padding: 0 .2em;
+    }
+  }
+
+  &__view-images {
+    position: relative;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    width: fit-content;
+    margin: 0 auto 2em;
+  }
+
+  &__window-block {
+    position: relative;
+    box-sizing: content-box;
+
+    &--with-fanlight {
+      padding-top: 80px;
+      background-color: #ececec;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: calc(80px - 30px);
+        background-color: #fff;
+        border-top: 2px solid #777;
+        border-bottom: 2px solid #777;
+      }
+
+      &:first-of-type:after {
+        left: 10px;
+        border-left: 2px solid #777;
+      }
+
+      &:last-child:after {
+        right: 10px;
+        border-right: 2px solid #777;
+      }
+    }
+
+    .calculator__window-block--sqew-bottom + & {
+      margin-top: 4%;
+    }
+  }
+
+  &__window-slope {
+    display: none;
+    position: absolute;
+    z-index: 0;
+    top: -20px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #efefef;
+
+    &--show {
+      display: block;
+    }
+
+    .calculator__window-block:first-of-type & {
+      left: -40px;
+
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0px;
+        left: 0;
+        width: 40px;
+        background: url(../img/calculator/slope-left.svg) 0 0 no-repeat;
+        background-size: cover;
+      }
+    }
+
+    .calculator__window-block:last-child & {
+      right: -40px;
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0px;
+        right: 0px;
+        width: 40px;
+        background: url(../img/calculator/slope-right.svg) 100% 0 no-repeat;
+        background-size: cover;
+      }
+    }
+
+    .calculator__window-block--sqew-bottom & {
+      top: calc(4% - 20px);
+      transform: skewY(9deg);
+    }
+
+    .calculator__window-block--sqew-top & {
+      top: calc(4% - 15px);
+      transform: skewY(-9deg);
+    }
+  }
+
+  &__window {
+    //position: relative;
+  }
+
+  &__window-window {
+    display: block;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__window-sill {
+    display: block;
+    position: relative;
+    z-index: 10;
+    width: 140%;
+    height: auto;
+    margin: 0 -20%;
+    padding: 0;
+
+    .calculator__window-block--sqew-bottom & {
+      transform: skewY(9deg);
+      margin-top: -9%;
+    }
+
+    .calculator__window-block--sqew-top & {
+      transform: skewY(-9deg);
+      margin-top: -9%;
+    }
+  }
+
+  &__hinge {
+    position: absolute;
+    z-index: 15;
+    top: 30px;
+    bottom: 30px;
+    width: 10px;
+
+    .calculator__window-block--with-fanlight & {
+      top: 110px;
+    }
+
+    .calculator__window-block--panoramic-french & {
+      bottom: 45%;
+    }
+
+    .calculator__window-sill--shown ~ & {
+      bottom: 47px;
+    }
+
+    &:before,
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 10px;
+      height: 25px;
+      background: url('../img/calculator/hinge.svg') 50% 50% no-repeat;
+      background-size: contain;
+    }
+
+    &:before {
+      top: 0;
+    }
+
+    &:after {
+      bottom: 0;
+    }
+
+    .calculator__window--static &,
+    .calculator__window--slidingRight &,
+    .calculator__window--slidingLeft & {
+      display: none;
+    }
+
+
+    .calculator__window--hingedRight &,
+    .calculator__window--revolvingRight & {
+      right: 1%;
+    }
+
+    .calculator__window--revolvingLeft &,
+    .calculator__window--hingedLeft & {
+      left: 1%;
+    }
+  }
+
+  &__handle {
+    position: absolute;
+    z-index: 15;
+    top: 45%;
+    height: 25px;
+    width: 10px;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+
+    .calculator__window-block--with-fanlight & {
+      top: calc(45% + 80px);
+    }
+
+    .calculator__window--static & {
+      display: none;
+    }
+
+    .calculator__window--hingedRight &,
+    .calculator__window--revolvingRight &,
+    .calculator__window--revolvingLeft &,
+    .calculator__window--hingedLeft & {
+      background-image: url('../img/calculator/rotary-handle.svg');
+    }
+    .calculator__window--slidingLeft &,
+    .calculator__window--slidingRight & {
+      background-image: url('../img/calculator/sliding-handle.svg');
+    }
+
+    .calculator__window--hingedRight &,
+    .calculator__window--revolvingRight &,
+    .calculator__window--slidingRight & {
+      left: 7%;
+    }
+
+    .calculator__window--revolvingLeft &,
+    .calculator__window--slidingLeft &,
+    .calculator__window--hingedLeft & {
+      right: 7%;
+    }
+
+  }
+
+  &__net {
+    position: absolute;
+    z-index: 20;
+    width: 100%;
+    top: 40%;
+    text-align: center;
+
+    & .calculator__checkbox-icon {
+      margin-right: 0;
+    }
+  }
+
+  &__net-text {
+    display: block;
+    padding: 0.5em 20px 0;
+    font-size: 0.8em;
+    line-height: 1.2;
+  }
+
+  &__sizes-height {
+    position: absolute;
+    left: 0;
+    top: 130px;
+    height: 180px;
+    padding-top: 50px;
+    width: 60px;
+    background-size: contain;
+    text-align: center;
+    font-weight: normal;
+  }
+
+  &__sizes-height2 {
+    position: absolute;
+    top: 130px;
+    right: 0;
+    height: calc(100% - 300px);
+    padding-top: 50px;
+    width: 60px;
+    background-size: contain;
+    text-align: center;
+    font-weight: normal;
+  }
+
+  &__sizes-width {
+    position: relative;
+    display: flex;
+    margin: 0 auto 2em;
+    width: 220px;
+    padding-left: 50px;
+    height: 40px;
+    background-size: contain;
+    text-align: center;
+    font-weight: normal;
+  }
+
+  &__sizes-text {
+    display: block;
+    position: relative;
+    z-index: 10;
+    width: 60px;
+    height: 40px;
+    margin: 0;
+    background: $bg-fon;
+    line-height: 40px;
+  }
+
+  &__view-counter {
+    margin-left: -50px;
+    display: flex;
+    column-gap: 2em;
+    align-items: center;
+  }
+}
