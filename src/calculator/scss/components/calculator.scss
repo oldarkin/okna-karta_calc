@@ -1,25 +1,26 @@
 .calculator {
+  max-width: calc(100% - 50px);
   display: grid;
   grid-template-areas: 
-            "result result"
-            "cart cart"
             "params view"
             "additional-params view"
-            "submit submit";
+            "submit submit"
+            "cart cart"
+            "result result";
   grid-template-columns: 50% 50%;
   grid-template-rows: auto auto auto auto 50px;
   gap: 0 50px;
   padding: 0 15px;
-  margin-bottom: 3em;
+  margin-bottom: 6em;
 
   @media (max-width: $xs) {
     grid-template-areas: 
-            "result"
-            "cart"
             "params"
             "view"
             "additional-params"
-            "submit";
+            "submit"
+            "cart"
+            "result";
     grid-template-columns: 100%;
     grid-template-rows: auto auto auto auto auto auto;
   }
@@ -46,13 +47,17 @@
     row-gap: 1em;
     column-gap: 1em;
     justify-content: center;
+    margin-bottom: 2em;
   }
 
   &__result {
     grid-area: result;
-    border-bottom: 2px solid $active-color;
-    padding-bottom: 2em;
+    border-top: 2px solid $active-color;
+    padding-top: 2em;
     margin-bottom: 2em;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
   }
   
   &__cart-list {
